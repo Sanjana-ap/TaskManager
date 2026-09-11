@@ -11,4 +11,5 @@ public interface ReminderRepository extends JpaRepository<Reminder, Long> {
     List<Reminder> findByTriggeredFalseAndReminderTimeLessThanEqual(LocalDateTime now);
 
     List<Reminder> findByTriggeredTrueAndAcknowledgedFalse();
+    void deleteByTaskId(Long taskId);
 }

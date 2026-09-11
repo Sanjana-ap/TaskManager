@@ -8,6 +8,7 @@ import com.san.task_manager.entity.Task;
 import com.san.task_manager.exception.CategoryNotFoundException;
 import com.san.task_manager.exception.TaskNotFoundException;
 import com.san.task_manager.repository.CategoryRepository;
+import com.san.task_manager.repository.ReminderRepository;
 import com.san.task_manager.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,10 +26,12 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final CategoryRepository categoryRepository;
+    private final ReminderRepository reminderRepository;
 
-    public TaskService(TaskRepository taskRepository, CategoryRepository categoryRepository) {
+    public TaskService(TaskRepository taskRepository, CategoryRepository categoryRepository, ReminderRepository reminderRepository) {
         this.taskRepository = taskRepository;
         this.categoryRepository = categoryRepository;
+        this.reminderRepository = reminderRepository;
     }
 
     public List<Task> getAllTasks() {
@@ -71,6 +74,7 @@ public class TaskService {
     }
 
     public void deleteTask(Long id) {
+    	reminderRepository.deleteByTaskId(id);
         taskRepository.deleteById(id);
     }
 
